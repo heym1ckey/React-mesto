@@ -1,111 +1,66 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
+@import url(blocks/page/page.css);
+@import url(blocks/popup-image/popup-image.css);
+@import url(blocks/popup-image/__picture/popup-image__picture.css);
+@import url(blocks/popup-image/__button/popup-image__button.css);
+@import url(blocks/popup-image/__signature/popup-image__signature.css);
+@import url(blocks/header/__logo/header__logo.css);
+@import url(blocks/popup-image/__container/popup-image__container.css);
+@import url(blocks/popup/popup.css);
+@import url(blocks/popup/__input/popup__input.css);
+@import url(blocks/popup/__inputs/popup__inputs.css);
+@import url(blocks/popup/__header/popup__header.css);
+@import url(blocks/popup/__close-icon/popup__close-icon.css);
+@import url(blocks/popup/__form-button/popup__form-button.css);
+@import url(blocks/popup/__contanier/popup__contanier.css);
+@import url(blocks/popup/__button/popup__button.css);
+@import url(blocks/popup-delete/popup-delete.css);
+@import url(blocks/popup-delete/__header/popup-delete__header.css);
+@import url(blocks/popup-delete/__close-icon/popup-add__close-icon.css);
+@import url(blocks/popup-delete/__form-button/popup-delete__form-button.css);
+@import url(blocks/popup-delete/__contanier/popup-delete__contanier.css);
+@import url(blocks/popup-delete/__close-button/popup-delete__close-button.css);
+@import url(blocks/popup-avatar/popup-avatar.css);
+@import url(blocks/popup-avatar/__input/popup-avatar__input.css);
+@import url(blocks/popup-avatar/__inputs/popup-avatar__inputs.css);
+@import url(blocks/popup-avatar/__header/popup-avatar__header.css);
+@import url(blocks/popup-avatar/__close-icon/popup-avatar__close-icon.css);
+@import url(blocks/popup-avatar/__form-button/popup-avatar__form-button.css);
+@import url(blocks/popup-avatar/__contanier/popup-avatar__contanier.css);
+@import url(blocks/popup-avatar/__button/popup-avatar__button.css);
+@import url(blocks/popup-add/popup-add.css);
+@import url(blocks/popup-add/__input/popup-add__input.css);
+@import url(blocks/popup-add/__inputs/popup-add__inputs.css);
+@import url(blocks/popup-add/__header/popup-add__header.css);
+@import url(blocks/popup-add/__close-icon/popup-add__close-icon.css);
+@import url(blocks/popup-add/__form-button/popup-add__form-button.css);
+@import url(blocks/popup-add/__contanier/popup-add__contanier.css);
+@import url(blocks/popup-add/__button/popup-add__button.css);
+@import url(blocks/popup/_active/popup_active.css);
+@import url(blocks/popup/__input/_type_error/popup__input_type_error.css);
+@import url(blocks/popup/__input/_error/popup__input_error.css);
+@import url(blocks/popup/__button/_disabled/popup__button_disabled.css);
+@import url(blocks/popup/__input/_error/_visible/popup__error_visible.css);
+@import url(blocks/header/header.css);
+@import url(blocks/profile/profile.css);
+@import url(blocks/profile/__intro/profile__intro.css);
+@import url(blocks/profile/__intro/__activity/intro__activity.css);
+@import url(blocks/profile/__intro/__button/intro__button.css);
+@import url(blocks/profile/__intro/__image/intro__image.css);
+@import url(blocks/profile/__intro/__avatar-box/intro__avatar-box.css);
+@import url(blocks/profile/__intro/__image-edit/intro__image-edit.css);
+@import url(blocks/profile/__intro/__name/intro__name.css);
+@import url(blocks/profile/__intro/__text/intro__text.css);
+@import url(blocks/profile/__intro/__name-button/intro__name-button.css);
+@import url(blocks/profile/__button/profile__button.css);
+@import url(blocks/elements/elements.css);
+@import url(blocks/elements/rectangle/rectangle.css);
+@import url(blocks/elements/rectangle/__button/rectangle__button.css);
+@import url(blocks/elements/rectangle/__like/rectangle__like.css);
+@import url(blocks/elements/rectangle/__like/__number/rectangle__like__number.css);
+@import url(blocks/elements/rectangle/__header/rectangle__header.css);
+@import url(blocks/elements/rectangle/__image/rectangle__image.css);
+@import url(blocks/elements/rectangle/__text-part/rectangle__text-part.css);
+@import url(blocks/elements/rectangle/__button_active/rectangle__button_active.css);
+@import url(blocks/elements/rectangle/__delete-button/rectangle__delete-button.css);
+@import url(blocks/footer/footer.css);
+@import url(blocks/footer/__copyright/footer__copyright.css);
