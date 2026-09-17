@@ -17,6 +17,7 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   }
 
   function handleDeleteCard() {
+    console.log("Клик по удалению!");
     onCardDelete(card);
   }
 

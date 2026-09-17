@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, use } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -11,11 +11,14 @@ import { CurrentUserContext } from "../context/CurrentUserContext";
 import EditProfilePopup from "./EditProfilePopup.jsx";
 import EditAvatarPopup from "./EditAvatarPopup.jsx";
 import AddPlacePopup from "./AddPlacePopup.jsx";
+import Confirmation from "./Confirmation.jsx";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState();
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState();
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState();
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+  const [cardToDelete, setCardToDelete] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
@@ -64,11 +67,20 @@ function App() {
     }
   };
 
-  const handleDeleteClick = async (card) => {
-    try {
-      await api.deleteCard(card._id);
+  const handleDeleteClick = (card) => {
+    console.log("handleDeleteClick вызван:", card);
+    setCardToDelete(card);
+    setConfirmationOpen(true);
+  };
 
-      setCards((state) => state.filter((c) => c._id !== card._id));
+  const handleConfirmDelete = async () => {
+    if (!cardToDelete) return;
+
+    try {
+      await api.deleteCard(cardToDelete._id);
+
+      setCards((state) => state.filter((c) => c._id !== cardToDelete._id));
+      closeAllPopups();
     } catch (err) {
       console.error("Ошибка при изменении лайка:", err);
     }
@@ -113,6 +125,8 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setSelectedCard(null);
+    setConfirmationOpen(false);
+    setCardToDelete(null);
   }
 
   return (
@@ -137,6 +151,9 @@ function App() {
         <Footer />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+
+        <Confirmation isOpen={confirmationOpen} onClose={closeAllPopups} onConfirm={handleConfirmDelete} />
+
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
@@ -154,8 +171,6 @@ function App() {
           onClose={closeAllPopups}
           onAddPlace={handleAddPlace}
         ></AddPlacePopup>
-
-        <PopupWithForm name="popup-delete" title="Вы уверены?" buttonTitle="Да" onClose={closeAllPopups} />
       </CurrentUserContext.Provider>
     </>
   );
