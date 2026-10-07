@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 
 export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
@@ -17,7 +17,6 @@ export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   }
 
   function handleDeleteCard() {
-    console.log("Клик по удалению!");
     onCardDelete(card);
   }
 

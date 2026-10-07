@@ -9,7 +9,7 @@
   border-radius: 50%;
   background: none;
   cursor: pointer;
-  background-image: url(/images/Profile/EditProfileIcon.svg);
+  background-image: url(../../../../images/Profile/EditProfileIcon.svg);
   background-position: center;
   background-repeat: no-repeat;
 }

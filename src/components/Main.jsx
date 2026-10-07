@@ -1,6 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
-import avatar from "../images/Profile/Avatar-image.svg";
-import api from "../utils/Api.js";
+import { useContext } from "react";
 import Card from "./Card.jsx";
 import { CurrentUserContext } from "../context/CurrentUserContext.js";
 
@@ -12,8 +10,18 @@ export default function Main({
   onCardClick,
   onCardLike,
   onCardDelete,
+  isLoading,
+  loadError,
 }) {
   const userInfo = useContext(CurrentUserContext);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (loadError) {
+    return <p>{loadError}</p>;
+  }
 
   if (!userInfo) {
     return <div className="loading">Загрузка пользователя...</div>;
@@ -39,15 +47,19 @@ export default function Main({
         <button className="profile__button" onClick={onAddPlace}></button>
       </section>
       <section className="elements">
-        {cards.map((card) => (
-          <Card
-            key={card._id}
-            card={card}
-            onCardClick={onCardClick}
-            onCardLike={onCardLike}
-            onCardDelete={onCardDelete}
-          />
-        ))}
+        {cards.length === 0 ? (
+          <p>No cards yet</p>
+        ) : (
+          cards.map((card) => (
+            <Card
+              key={card._id}
+              card={card}
+              onCardClick={onCardClick}
+              onCardLike={onCardLike}
+              onCardDelete={onCardDelete}
+            />
+          ))
+        )}
       </section>
     </>
   );

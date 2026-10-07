@@ -1,20 +1,19 @@
-import React from "react";
-import closePopupButton from "../images/popup/Close Icon.svg";
-import handleOverlayClick from "../utils/OverlayClose";
-handleOverlayClick;
+import PopupWithForm from "./PopupWithForm";
 
 export default function Confirmation({ isOpen, onConfirm, onClose }) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    return onConfirm();
+  };
   return (
-    <section className={`popup-delete ${isOpen ? "popup_active" : ""}`} onClick={(e) => handleOverlayClick(e, onClose)}>
-      <form className="popup-delete__container" action="">
-        <button className="popup-delete__close-button" type="button" onClick={onClose}>
-          <img className="popup__close-icon" src={closePopupButton} alt="" />
-        </button>
-        <h2 className="popup-delete__header">Вы уверены?</h2>
-        <button className="popup-delete__form-button" type="button" onClick={onConfirm}>
-          Да
-        </button>
-      </form>
-    </section>
+    <PopupWithForm
+      name="popup-delete"
+      title="Вы уверены ?"
+      buttonTitle="Да"
+      loadingButtonTitle="Удаление..."
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={handleSubmit}
+    />
   );
 }

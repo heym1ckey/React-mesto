@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import { useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 export default function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
@@ -15,7 +15,7 @@ export default function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    onAddPlace({
+    return onAddPlace({
       name: name,
       link: link,
     });
@@ -25,6 +25,7 @@ export default function AddPlacePopup({ onClose, isOpen, onAddPlace }) {
       name="popup-add"
       title="Новое место"
       buttonTitle="Создать"
+      loadingButtonTitle="Создание..."
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}

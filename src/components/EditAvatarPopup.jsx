@@ -1,10 +1,10 @@
-import React, { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 
 export default function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar }) {
-  const [link, setLink] = useState("");
   const currentUser = useContext(CurrentUserContext);
+  const [link, setLink] = useState(currentUser?.link ?? "");
 
   useEffect(() => {
     if (currentUser) {
@@ -19,7 +19,7 @@ export default function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar }) {
   function handleSubmit(e) {
     e.preventDefault();
 
-    onUpdateAvatar({
+    return onUpdateAvatar({
       avatar: link,
     });
   }
@@ -28,6 +28,7 @@ export default function EditAvatarPopup({ onClose, isOpen, onUpdateAvatar }) {
     <PopupWithForm
       name="popup-avatar"
       title="Обновить аватар"
+      loadingButtonTitle="Сохранение..."
       buttonTitle="Сохранить"
       isOpen={isOpen}
       onClose={onClose}

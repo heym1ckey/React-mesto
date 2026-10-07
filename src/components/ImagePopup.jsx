@@ -1,10 +1,14 @@
 import closePopupButton from "../images/popup/Close Icon.svg";
-import handleOverlayClick from "../utils/OverlayClose";
-handleOverlayClick;
 
 export default function ImagePopup({ card, onClose }) {
+  const handleOverlayClick = (e) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
   return (
-    <section className={`popup-image ${card ? "popup_active" : ""} `} onClick={(e) => handleOverlayClick(e, onClose)}>
+    <section className={`popup-image ${card ? "popup_active" : ""} `} onClick={handleOverlayClick}>
       <div className="popup-image__container">
         <button type="button" className="popup-image__button" onClick={onClose}>
           <img className="popup__close-icon" src={closePopupButton} alt="" />

@@ -1,10 +1,9 @@
-import React, { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 
 import "../index.css";
-import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import api from "../utils/Api.js";
 import { CurrentUserContext } from "../context/CurrentUserContext";
@@ -14,45 +13,32 @@ import AddPlacePopup from "./AddPlacePopup.jsx";
 import Confirmation from "./Confirmation.jsx";
 
 function App() {
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState();
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState();
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState();
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
   const [cardToDelete, setCardToDelete] = useState(null);
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [cards, setCards] = useState([]);
 
   useEffect(() => {
-    if (currentUser) {
-      api.getCards().then(setCards);
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
-    const getCard = async () => {
+    const loadData = async () => {
       try {
-        const data = await api.getCards();
-        setCards(data);
+        const [user, loadedCards] = await Promise.all([api.getUserInfo(), api.getCards()]);
+        setCurrentUser(user);
+        setCards(loadedCards);
+        setLoadError(false);
       } catch (err) {
-        console.error("Ошибка при получении данных пользователя:", err);
+        console.error("Ошибка при получении данных: ", err);
+        setLoadError(true);
+      } finally {
+        setIsLoading(false);
       }
     };
-
-    getCard();
-  }, []);
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const data = await api.getUserInfo();
-        setCurrentUser(data);
-      } catch (err) {
-        console.error("Ошибка при получении данных пользователя:", err);
-      }
-    };
-
-    fetchUserInfo();
+    loadData();
   }, []);
 
   const handleLikeClick = async (card) => {
@@ -63,12 +49,11 @@ function App() {
 
       setCards((state) => state.map((c) => (c._id === card._id ? updatedCard : c)));
     } catch (err) {
-      console.error("Ошибка при изменении лайка:", err);
+      console.error("Ошибка при установке лайка:", err);
     }
   };
 
   const handleDeleteClick = (card) => {
-    console.log("handleDeleteClick вызван:", card);
     setCardToDelete(card);
     setConfirmationOpen(true);
   };
@@ -82,7 +67,7 @@ function App() {
       setCards((state) => state.filter((c) => c._id !== cardToDelete._id));
       closeAllPopups();
     } catch (err) {
-      console.error("Ошибка при изменении лайка:", err);
+      console.error("Ошибка удаления лайка:", err);
     }
   };
 
@@ -109,7 +94,7 @@ function App() {
   const handleAddPlace = async ({ name, link }) => {
     try {
       const newCard = await api.addNewCards(name, link);
-      setCards([newCard, ...cards]);
+      setCards((currentCards) => [newCard, ...currentCards]);
       closeAllPopups();
     } catch (err) {
       console.log("Ошибка при добавлении новой карточки:", err);
@@ -147,6 +132,8 @@ function App() {
           onCardClick={handleCardClick}
           onCardLike={handleLikeClick}
           onCardDelete={handleDeleteClick}
+          isLoading={isLoading}
+          loadError={loadError}
         />
         <Footer />
 
@@ -154,23 +141,17 @@ function App() {
 
         <Confirmation isOpen={confirmationOpen} onClose={closeAllPopups} onConfirm={handleConfirmDelete} />
 
-        <EditProfilePopup
-          isOpen={isEditProfilePopupOpen}
-          onClose={closeAllPopups}
-          onUpdateUser={handleUpdateUser}
-        ></EditProfilePopup>
+        {isEditProfilePopupOpen && (
+          <EditProfilePopup isOpen onClose={closeAllPopups} onUpdateUser={handleUpdateUser}></EditProfilePopup>
+        )}
 
-        <EditAvatarPopup
-          isOpen={isEditAvatarPopupOpen}
-          onClose={closeAllPopups}
-          onUpdateAvatar={handleUpdateAvatar}
-        ></EditAvatarPopup>
+        {isEditAvatarPopupOpen && (
+          <EditAvatarPopup isOpen onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}></EditAvatarPopup>
+        )}
 
-        <AddPlacePopup
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-          onAddPlace={handleAddPlace}
-        ></AddPlacePopup>
+        {isAddPlacePopupOpen && (
+          <AddPlacePopup isOpen onClose={closeAllPopups} onAddPlace={handleAddPlace}></AddPlacePopup>
+        )}
       </CurrentUserContext.Provider>
     </>
   );
