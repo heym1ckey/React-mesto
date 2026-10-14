@@ -20,7 +20,7 @@ export default function Main({
   }
 
   if (loadError) {
-    return <p>{loadError}</p>;
+    return <p>Не удалось загрузить данные. Попробуйте позже.</p>;
   }
 
   if (!userInfo) {
