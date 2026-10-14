@@ -1,0 +1,9 @@
+.userform__button {
+  width: 358px;
+  height: 50px;
+  cursor: pointer;
+  background-color: #fefefe;
+  color: #000;
+  font-size: 18px;
+  font-weight: 400;
+}

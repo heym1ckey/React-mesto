@@ -1,0 +1,9 @@
+.info-tooltip__close-button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  top: -40px;
+  right: -40px;
+}
