@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 
 import Header from "./Header";
@@ -160,7 +160,7 @@ function App() {
     navigate("/sign-in", { replace: true });
   };
 
-  const closeAllPopups = () => {
+  const closeAllPopups = useCallback(() => {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
@@ -168,7 +168,7 @@ function App() {
     setConfirmationOpen(false);
     setIsInfoToolTipOpen(false);
     setCardToDelete(null);
-  };
+  }, []);
 
   return (
     <>

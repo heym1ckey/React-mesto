@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import closePopupButton from "../images/popup/Close Icon.svg";
 
 export default function PopupWithForm({
@@ -12,19 +12,18 @@ export default function PopupWithForm({
   onSubmit,
 }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const handleEscClose = useCallback(
+    (e) => {
+      if (e.key === "Escape") onClose();
+    },
+    [onClose],
+  );
 
   useEffect(() => {
     if (!isOpen) return;
-
-    const handleEscClose = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-
     document.addEventListener("keydown", handleEscClose);
     return () => document.removeEventListener("keydown", handleEscClose);
-  }, [isOpen, onClose]);
+  }, [isOpen, handleEscClose]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
